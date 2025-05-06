@@ -1,0 +1,6 @@
+<footer class="bg-light text-center py-3 mt-5">
+    <p>Team Members:</p>
+    {% for member in team %}
+        <a href="{{ member.linkedin }}" target="_blank">{{ member.name }}</a>{% if not forloop.last %} | {% endif %}
+    {% endfor %}
+</footer>

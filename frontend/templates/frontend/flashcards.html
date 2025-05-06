@@ -1,0 +1,71 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Flashcards{% endblock %}
+
+{% block extra_css %}
+<style>
+    .flip-card {
+        background-color: transparent;
+        width: 250px;
+        height: 150px;
+        perspective: 1000px;
+        margin: 1rem;
+    }
+    .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+    }
+    .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        padding: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+    .flip-card-front {
+        background-color: #f8f9fa;
+    }
+    .flip-card-back {
+        background-color: #007bff;
+        color: white;
+        transform: rotateY(180deg);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1 class="mb-4">Flashcards</h1>
+    <div class="row justify-content-center">
+        {% for card in flashcards %}
+        <div class="col-md-3 col-sm-6">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        {{ card.title }}
+                    </div>
+                    <div class="flip-card-back">
+                        {{ card.definition }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

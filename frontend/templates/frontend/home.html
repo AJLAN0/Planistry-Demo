@@ -1,0 +1,121 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Home - Planistry{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero section styling */
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-bottom: 3rem;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .hero-title {
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        letter-spacing: -0.5px;
+    }
+    
+    /* Services cards styling */
+    .service-card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        border-bottom: 4px solid transparent;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+        border-bottom-color: #667eea;
+    }
+    
+    .card-body {
+        padding: 2rem;
+    }
+    
+    .card-title {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        font-size: 1.25rem;
+    }
+    
+    .card-text {
+        color: #7f8c8d;
+        margin-bottom: 1.5rem;
+        min-height: 60px;
+    }
+    
+    .service-btn {
+        background: linear-gradient(to right, #667eea, #764ba2);
+        border: none;
+        border-radius: 30px;
+        padding: 8px 24px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s;
+    }
+    
+    .service-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 3rem 0;
+        }
+        
+        .hero-title {
+            font-size: 2rem;
+        }
+        
+        .col-md-4 {
+            margin-bottom: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title display-4">The Future of Study with Planistry</h1>
+    </div>
+</section>
+
+<!-- Services Section -->
+<div class="container">
+    <div class="row">
+        {% for service in services %}
+        <div class="col-md-4 mb-4">
+            <div class="card service-card">
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold">{{ service.name }}</h5>
+                    <p class="card-text">{{ service.description }}</p>
+                    <a href="{% url 'quizzes' %}" class="btn service-btn text-white">
+                        Upload File <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Font Awesome for icons (add this in your base template) -->
+<script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+{% endblock %}
