@@ -36,8 +36,6 @@ STATIC_URL = '/static/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-django.middleware.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -61,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 ROOT_URLCONF = 'planistrydemo.urls'
 
 TEMPLATES = [
@@ -80,6 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'planistrydemo.wsgi.application'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Database
