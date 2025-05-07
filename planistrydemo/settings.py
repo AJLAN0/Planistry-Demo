@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-p#sp_%fv+xt+cb+^(0ntil9la*7)g=7ml$$&cofvsuiyc#2w0+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["planistry-demo.onrender.com", "localhost", "127.0.0.1"]
 
 STATIC_URL = '/static/'
 
