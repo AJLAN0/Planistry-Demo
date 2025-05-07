@@ -1,1 +1,1 @@
-web: gunicorn PlanistryDemo.wsgi
+web: gunicorn planistrydemo.wsgi
