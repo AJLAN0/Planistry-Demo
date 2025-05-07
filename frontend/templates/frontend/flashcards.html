@@ -5,13 +5,38 @@
 
 {% block extra_css %}
 <style>
+    .flashcards-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 15px;
+    }
+    
+    .page-title {
+        color: #2c3e50;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        text-align: center;
+    }
+    
+    .flashcards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+        justify-items: center;
+    }
+    
     .flip-card {
         background-color: transparent;
-        width: 250px;
-        height: 150px;
+        width: 100%;
+        height: 180px;
         perspective: 1000px;
-        margin: 1rem;
+        cursor: pointer;
     }
+    
+    .flip-card.active .flip-card-inner {
+        transform: rotateY(180deg);
+    }
+    
     .flip-card-inner {
         position: relative;
         width: 100%;
@@ -20,52 +45,109 @@
         transition: transform 0.6s;
         transform-style: preserve-3d;
     }
-    .flip-card:hover .flip-card-inner {
-        transform: rotateY(180deg);
-    }
+    
     .flip-card-front, .flip-card-back {
         position: absolute;
         width: 100%;
         height: 100%;
         backface-visibility: hidden;
-        border: 1px solid #ccc;
         border-radius: 12px;
         padding: 1rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-weight: bold;
-        font-size: 1.2rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden; /* Prevent text overflow */
     }
+    
     .flip-card-front {
-        background-color: #f8f9fa;
+        background: white;
+        border: 2px solid #e0e0e0;
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Responsive font size */
     }
+    
     .flip-card-back {
-        background-color: #007bff;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         transform: rotateY(180deg);
+        line-height: 1.4;
+        font-size: clamp(0.8rem, 2.2vw, 1rem); /* Responsive font size */
+        overflow-y: auto; /* Add scroll for very long content */
+    }
+    
+    /* Dynamic text sizing based on content length */
+    .flip-card-front.long-text, 
+    .flip-card-back.long-text {
+        font-size: clamp(0.7rem, 2vw, 0.9rem);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .flashcards-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+        
+        .flip-card {
+            height: 160px;
+        }
+        
+        .flip-card-front, .flip-card-back {
+            padding: 0.8rem;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container text-center mt-5">
-    <h1 class="mb-4">Flashcards</h1>
-    <div class="row justify-content-center">
+<div class="flashcards-container">
+    <h1 class="page-title">Flashcards</h1>
+    
+    <div class="flashcards-grid">
         {% for card in flashcards %}
-        <div class="col-md-3 col-sm-6">
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        {{ card.title }}
-                    </div>
-                    <div class="flip-card-back">
-                        {{ card.definition }}
-                    </div>
+        <div class="flip-card" onclick="this.classList.toggle('active')">
+            <div class="flip-card-inner">
+                <div class="flip-card-front {% if card.title|length > 30 %}long-text{% endif %}">
+                    {{ card.title }}
+                </div>
+                <div class="flip-card-back {% if card.definition|length > 100 %}long-text{% endif %}">
+                    {{ card.definition }}
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-detect long content and adjust font size
+    document.querySelectorAll('.flip-card-front, .flip-card-back').forEach(card => {
+        // Check if content exceeds card dimensions
+        if (card.scrollHeight > card.clientHeight || card.scrollWidth > card.clientWidth) {
+            card.classList.add('long-text');
+        }
+    });
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        const activeCard = document.querySelector('.flip-card.active');
+        if (e.key === 'Escape' && activeCard) {
+            activeCard.classList.remove('active');
+        }
+    });
+    
+    // Close card when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.flip-card')) {
+            document.querySelectorAll('.flip-card.active').forEach(card => {
+                card.classList.remove('active');
+            });
+        }
+    });
+});
+</script>
 {% endblock %}

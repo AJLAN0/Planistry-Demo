@@ -104,18 +104,60 @@
                 <div class="card-body text-center">
                     <h5 class="card-title fw-bold">{{ service.name }}</h5>
                     <p class="card-text">{{ service.description }}</p>
-                    <a href="{% url 'quizzes' %}" class="btn service-btn text-white">
-                        Upload File <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
+                    <a href="#" 
+   class="btn service-btn text-white" 
+   data-bs-toggle="modal" 
+   data-bs-target="#uploadModal"
+   onclick="setSelectedService('{{ service.url }}')">
+   Upload File <i class="fas fa-arrow-right ms-2"></i>
+</a>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+
+<!-- Upload Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-4">
+        <form id="uploadForm" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="modal-header border-0">
+            <h5 class="modal-title">Upload Your File</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <input type="file" name="pdf" class="form-control mb-3" required>
+            <button type="submit" class="btn btn-success">Generate</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block extra_js %}
-<!-- Font Awesome for icons (add this in your base template) -->
 <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+<script>
+    let selectedService = null;
+
+    function setSelectedService(service) {
+        selectedService = service;
+        const form = document.getElementById('uploadForm');
+
+        if (service === 'flashcards') {
+            form.action = "{% url 'upload_flashcards' %}";
+        } else if (service === 'quizzes') {
+            form.action = "{% url 'upload_quizzes' %}";
+        } else if (service === 'study-plan') {
+            form.action = "{% url 'upload-studyplan' %}";
+        } else {
+            form.action = "#";  // fallback
+        }
+    }
+</script>
+
+
 {% endblock %}
