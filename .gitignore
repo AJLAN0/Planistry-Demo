@@ -35,3 +35,4 @@ Thumbs.db
 *.pid
 *.bak
 *.swp
+.env

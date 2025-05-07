@@ -20,8 +20,13 @@ import re
 
 
 from datetime import date
+import os
+from dotenv import load_dotenv
 
-client = OpenAI(api_key="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", base_url="https://openrouter.ai/api/v1")
+load_dotenv()  # Load .env file
+
+api_key = os.getenv("OPENROUTER_API_KEY")
+client = OpenAI(api_key=api_key, base_url="https://openrouter.ai/api/v1")
 
 def home_view(request):
     services = [
