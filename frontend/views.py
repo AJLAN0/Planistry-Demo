@@ -51,10 +51,10 @@ def home_view(request):
 ]
 
     team = [
-        {'name': 'Ajlan', 'linkedin': 'https://linkedin.com/in/ali-mutairi'},
-        {'name': 'Hamad', 'linkedin': 'https://linkedin.com/in/sara-qahtani'},
-        {'name': 'Faris', 'linkedin': 'https://linkedin.com/in/yousef-fahad'},
-        {'name': 'Abdullah', 'linkedin': 'https://linkedin.com/in/yousef-fahad'}
+        {'name': 'Ajlan', 'linkedin': ''},
+        {'name': 'Hamad', 'linkedin': ''},
+        {'name': 'Faris', 'linkedin': ''},
+        {'name': 'Abdullah', 'linkedin': ''}
     ]
 
     return render(request, 'frontend/home.html', {'services': services, 'team': team})
@@ -62,10 +62,10 @@ def home_view(request):
 
 def flashcards_view(request):
     team = [
-        {'name': 'Ajlan', 'linkedin': 'https://linkedin.com/in/ali-mutairi'},
-        {'name': 'Hamad', 'linkedin': 'https://linkedin.com/in/sara-qahtani'},
-        {'name': 'Faris', 'linkedin': 'https://linkedin.com/in/yousef-fahad'},
-        {'name': 'Abdullah', 'linkedin': 'https://linkedin.com/in/yousef-fahad'}
+        {'name': 'Ajlan', 'linkedin': ''},
+        {'name': 'Hamad', 'linkedin': ''},
+        {'name': 'Faris', 'linkedin': ''},
+        {'name': 'Abdullah', 'linkedin': ''}
     ]
 
     flashcards = [
